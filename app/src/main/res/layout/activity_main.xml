@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tk.zongren.pullablelayout.PullableLayout
+<me.zongren.pullablelayout.PullableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_pullableLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.pullablelayout.MainActivity">
-    <tk.zongren.pullablelayout.PullableTextView
+    <me.zongren.pullablelayout.PullableTextView
         android:id="@+id/activity_main_pullableTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/refresh_and_load_times"
         android:gravity="center"/>
-</tk.zongren.pullablelayout.PullableLayout>
+</me.zongren.pullablelayout.PullableLayout>

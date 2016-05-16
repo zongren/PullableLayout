@@ -6,5 +6,5 @@ Extends RelativeLayout,add header and footer automatically
 # How to use
 
 ```
-compile 'tk.zongren.android:pullablelayout:1.0.2'
+compile 'me.zongren.android:pullablelayout:1.0.2'
 ```
