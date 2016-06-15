@@ -114,7 +114,7 @@ public class PullableLayout extends RelativeLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        boolean intercepted = false;
+        boolean intercepted = true;
         switch (ev.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 if (mCurrentComponent != null) {
@@ -266,7 +266,7 @@ public class PullableLayout extends RelativeLayout {
     }
 
     private boolean handleTouchMove(MotionEvent ev) {
-        boolean intercepted = false;
+        boolean intercept = true;
         float currentX = ev.getX();
         float currentY = ev.getY();
         float offsetX = currentX - mTouchDownX;
@@ -296,9 +296,9 @@ public class PullableLayout extends RelativeLayout {
                 mTouchDownY = ev.getY();
                 mCurrentComponent.clearTouchDownSize();
                 mCurrentComponent = null;
-                intercepted = false;
+                intercept = false;
             } else {
-                intercepted = true;
+                intercept = true;
             }
         }
         //If no pullable component on the screen,pick one.
@@ -342,48 +342,52 @@ public class PullableLayout extends RelativeLayout {
                 case FROM_TOP_TO_BOTTOM:
                     if (topComponent != null && ((Pullable) mPullableView).reachEdgeOfSide(Side.TOP)) {
                         mCurrentComponent = topComponent;
-                        intercepted = true;
+                        intercept = true;
                     }
                     break;
                 case FROM_BOTTOM_TO_TOP:
                     if (bottomComponent != null && ((Pullable) mPullableView).reachEdgeOfSide(Side.BOTTOM)) {
                         mCurrentComponent = bottomComponent;
-                        intercepted = true;
+                        intercept = true;
                     }
                     break;
                 case FROM_LEFT_TO_RIGHT:
                     if (leftComponent != null && ((Pullable) mPullableView).reachEdgeOfSide(Side.LEFT)) {
                         mCurrentComponent = leftComponent;
-                        intercepted = true;
+                        intercept = true;
                     }
                     break;
                 case FROM_RIGHT_TO_LEFT:
                     if (rightComponent != null && ((Pullable) mPullableView).reachEdgeOfSide(Side.RIGHT)) {
                         mCurrentComponent = rightComponent;
-                        intercepted = true;
+                        intercept = true;
                     }
                     break;
                 case NONE:
+                default:
+                    intercept = false;
                     break;
             }
-            if (intercepted) {
-                switch (mCurrentComponent.getSide()) {
-                    case TOP:
-                        mCurrentComponent.setSize((int) (absOffsetY / mDistanceRatio));
-                        break;
-                    case LEFT:
-                        mCurrentComponent.setSize((int) (absOffsetX / mDistanceRatio));
-                        break;
-                    case BOTTOM:
-                        mCurrentComponent.setSize((int) (absOffsetY / mDistanceRatio));
-                        break;
-                    case RIGHT:
-                        mCurrentComponent.setSize((int) (absOffsetX / mDistanceRatio));
-                        break;
+            if (intercept) {
+                if (mCurrentComponent != null) {
+                    switch (mCurrentComponent.getSide()) {
+                        case TOP:
+                            mCurrentComponent.setSize((int) (absOffsetY / mDistanceRatio));
+                            break;
+                        case LEFT:
+                            mCurrentComponent.setSize((int) (absOffsetX / mDistanceRatio));
+                            break;
+                        case BOTTOM:
+                            mCurrentComponent.setSize((int) (absOffsetY / mDistanceRatio));
+                            break;
+                        case RIGHT:
+                            mCurrentComponent.setSize((int) (absOffsetX / mDistanceRatio));
+                            break;
+                    }
                 }
             }
         }
-        return intercepted;
+        return intercept;
     }
 
 

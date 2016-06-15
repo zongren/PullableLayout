@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    PullableLayout:pullablelayout_side="TOP"
+    PullableLayout:pullablelayout_side="TOP|LEFT|BOTTOM|RIGHT"
     tools:context="me.zongren.example.pullablelayout.MainActivity"
     >
 
