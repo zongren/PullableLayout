@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pullablelayout_pull_to_load">Pull to load</string>
+    <string name="pullablelayout_previous_update_time">Previous update time %1$s</string>
+    <string name="pullablelayout_loading">Loading</string>
+    <string name="pullablelayout_load_succeed">Load succeed</string>
+    <string name="pullablelayout_load_failed">Load failed</string>
+    <string name="pullablelayout_release_to_load">Release to load</string>
+</resources>
