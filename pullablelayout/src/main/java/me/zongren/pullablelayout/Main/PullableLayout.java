@@ -122,7 +122,10 @@ public class PullableLayout extends RelativeLayout {
                     mCurrentComponent.setTouching(true);
                     if (mCurrentComponent.getSize() <= 0) {
                         mCurrentComponent = null;
+                        intercepted = false;
                     }
+                } else {
+                    intercepted = false;
                 }
                 mTouchDownX = ev.getX();
                 mTouchDownY = ev.getY();
@@ -134,6 +137,8 @@ public class PullableLayout extends RelativeLayout {
                 if (mCurrentComponent != null) {
                     mCurrentComponent.release();
                     mCurrentComponent.setTouching(false);
+                } else {
+                    intercepted = false;
                 }
                 break;
         }
@@ -343,24 +348,32 @@ public class PullableLayout extends RelativeLayout {
                     if (topComponent != null && ((Pullable) mPullableView).reachEdgeOfSide(Side.TOP)) {
                         mCurrentComponent = topComponent;
                         intercept = true;
+                    } else {
+                        intercept = false;
                     }
                     break;
                 case FROM_BOTTOM_TO_TOP:
                     if (bottomComponent != null && ((Pullable) mPullableView).reachEdgeOfSide(Side.BOTTOM)) {
                         mCurrentComponent = bottomComponent;
                         intercept = true;
+                    } else {
+                        intercept = false;
                     }
                     break;
                 case FROM_LEFT_TO_RIGHT:
                     if (leftComponent != null && ((Pullable) mPullableView).reachEdgeOfSide(Side.LEFT)) {
                         mCurrentComponent = leftComponent;
                         intercept = true;
+                    } else {
+                        intercept = false;
                     }
                     break;
                 case FROM_RIGHT_TO_LEFT:
                     if (rightComponent != null && ((Pullable) mPullableView).reachEdgeOfSide(Side.RIGHT)) {
                         mCurrentComponent = rightComponent;
                         intercept = true;
+                    } else {
+                        intercept = false;
                     }
                     break;
                 case NONE:
