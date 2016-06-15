@@ -4,5 +4,5 @@ PullableLayout makes it easy to add pull-to-load feature to your app on top,left
 # How to use
 
 ```
-compile 'me.zongren.android:pullablelayout:1.5'
+compile 'me.zongren:pullablelayout:1.5'
 ```
