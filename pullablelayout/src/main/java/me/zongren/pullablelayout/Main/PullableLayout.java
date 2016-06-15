@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -199,7 +198,6 @@ public class PullableLayout extends RelativeLayout {
                     break;
                 case LEFT:
                     pullableComponentLeft = pullableComponentSize - pullableComponentWidth;
-                    Log.i(TAG, "left is " + pullableComponentLeft + ",size is " + pullableComponentSize + ",width is " + pullableComponentWidth);
                     pullableViewLeft += pullableComponentSize;
                     //layout other components on other sides
                     if (topComponent != null) {
