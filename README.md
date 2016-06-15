@@ -1,10 +1,8 @@
-# Modified from [PullToRefreshAndLoad](https://github.com/jingchenUSTC/PullToRefreshAndLoad "PullToRefreshAndLoad")
-
 # PullableLayout
-Extends RelativeLayout,add header and footer automatically
+PullableLayout makes it easy to add pull-to-load feature to your app on top,left,bottom and right side.
 
 # How to use
 
 ```
-compile 'me.zongren.android:pullablelayout:1.0.2'
+compile 'me.zongren.android:pullablelayout:1.5'
 ```

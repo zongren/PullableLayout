@@ -1,4 +1,0 @@
-<resources>
-    <string name="app_name">PullableLayout</string>
-    <string name="refresh_and_load_times">Refreshed %1$d times,loaded %2$d times</string>
-</resources>
