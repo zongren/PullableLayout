@@ -9,8 +9,8 @@ group = "me.zongren"
 version = "1.5.2"
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
     resourcePrefix "pullablelayout_"
 
     defaultConfig {
