@@ -9,13 +9,13 @@ group = "me.zongren"
 version = "1.5.2"
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
     resourcePrefix "pullablelayout_"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 21
+        targetSdkVersion 23
         versionCode 3
         versionName version
     }
@@ -28,6 +28,14 @@ android {
     }
 }
 
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:recyclerview-v7:23.0.0'
+
+}
+/*
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
@@ -82,13 +90,6 @@ install {
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:21.0.0'
-    compile 'com.android.support:recyclerview-v7:21.0.0'
-
-}
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
@@ -108,3 +109,4 @@ artifacts {
     archives javadocJar
     archives sourcesJar
 }
+*/
