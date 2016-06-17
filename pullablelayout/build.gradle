@@ -6,7 +6,7 @@ def siteUrl = 'https://github.com/zongren/PullableLayout'
 def gitUrl = 'https://github.com/zongren/PullableLayout.git'
 
 group = "me.zongren"
-version = "1.5.1"
+version = "1.5.2"
 
 android {
     compileSdkVersion 23
