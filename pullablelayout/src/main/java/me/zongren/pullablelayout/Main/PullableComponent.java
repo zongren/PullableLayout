@@ -60,11 +60,13 @@ public class PullableComponent {
         mFlipAnimation.setInterpolator(new LinearInterpolator());
         mRotateAnimation.setInterpolator(new LinearInterpolator());
         mReverseFlipAnimation.setInterpolator(new ReverseInterpolator());
+        //These view may be null
         mIconImageView = (ImageView) mView.findViewById(R.id.pullable_icon_imageView);
         mLoadingImageView = (ImageView) mView.findViewById(R.id.pullable_loading_imageView);
         mResultImageView = (ImageView) mView.findViewById(R.id.pullable_result_imageView);
         mStatusTextView = (TextView) mView.findViewById(R.id.pullable_status_textView);
         mPreviousUpdateTextView = (TextView) mView.findViewById(R.id.pullable_previous_update_textView);
+
         mPreviousUpdateDate = new Date();
         setPreviousUpdateDate();
     }
@@ -162,10 +164,12 @@ public class PullableComponent {
     }
 
     public void setPreviousUpdateDate(Date previousUpdateDate) {
-        mPreviousUpdateDate = previousUpdateDate;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String text = String.format(mView.getContext().getResources().getString(R.string.pullablelayout_previous_update_time), dateFormat.format(mPreviousUpdateDate));
-        mPreviousUpdateTextView.setText(text);
+        if (mPreviousUpdateTextView != null) {
+            mPreviousUpdateDate = previousUpdateDate;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String text = String.format(mView.getContext().getResources().getString(R.string.pullablelayout_previous_update_time), dateFormat.format(mPreviousUpdateDate));
+            mPreviousUpdateTextView.setText(text);
+        }
     }
 
     public void setTouching(boolean touching) {
@@ -220,66 +224,54 @@ public class PullableComponent {
      */
     private void onStatusChanged(Status fromStatus, Status toStatus) {
         if (fromStatus == Status.INADEQUATE && toStatus == Status.ADEQUATE) {
-            mIconImageView.startAnimation(mFlipAnimation);
-            mIconImageView.setVisibility(View.VISIBLE);
-            mResultImageView.setVisibility(View.GONE);
-            mLoadingImageView.setVisibility(View.GONE);
-            mStatusTextView.setText(R.string.pullablelayout_release_to_load);
+            startIconAnimation(mFlipAnimation);
+            hideLoadingImageView();
+            hideResultImageView();
+            setStatusText(R.string.pullablelayout_release_to_load);
         }
         if (fromStatus == Status.ADEQUATE && toStatus == Status.INADEQUATE) {
-            mIconImageView.startAnimation(mReverseFlipAnimation);
-            mIconImageView.setVisibility(View.VISIBLE);
-            mResultImageView.setVisibility(View.GONE);
-            mLoadingImageView.setVisibility(View.GONE);
-            mStatusTextView.setText(R.string.pullablelayout_pull_to_load);
+            startIconAnimation(mReverseFlipAnimation);
+            hideLoadingImageView();
+            hideResultImageView();
+            setStatusText(R.string.pullablelayout_pull_to_load);
         }
         if (fromStatus == Status.ADEQUATE && toStatus == Status.LOAD) {
-            mIconImageView.setVisibility(View.GONE);
-            mIconImageView.clearAnimation();
-            mResultImageView.setVisibility(View.GONE);
-            mLoadingImageView.startAnimation(mRotateAnimation);
-            mLoadingImageView.setVisibility(View.VISIBLE);
-            mStatusTextView.setText(R.string.pullablelayout_loading);
+            hideIconImageView();
+            hideResultImageView();
+            startLoadingAnimation(mRotateAnimation);
+            setStatusText(R.string.pullablelayout_loading);
             if (mOnPullListener != null) {
                 mOnPullListener.onLoading(this);
             }
         }
         if (fromStatus == Status.LOAD && toStatus == Status.ADEQUATE) {
-            mIconImageView.clearAnimation();
-            mIconImageView.startAnimation(mFlipAnimation);
-            mIconImageView.setVisibility(View.VISIBLE);
-            mResultImageView.setVisibility(View.GONE);
-            mLoadingImageView.setVisibility(View.GONE);
-            mLoadingImageView.clearAnimation();
-            mStatusTextView.setText(R.string.pullablelayout_release_to_load);
+            startIconAnimation(mFlipAnimation);
+            hideResultImageView();
+            hideLoadingImageView();
+            setStatusText(R.string.pullablelayout_release_to_load);
             if (mOnPullListener != null) {
                 mOnPullListener.onCanceled(this);
             }
         }
         if (fromStatus == Status.LOAD && toStatus == Status.INADEQUATE) {
-            mIconImageView.clearAnimation();
-            mIconImageView.setVisibility(View.VISIBLE);
-            mResultImageView.setVisibility(View.GONE);
-            mLoadingImageView.setVisibility(View.GONE);
-            mLoadingImageView.clearAnimation();
-            mStatusTextView.setText(R.string.pullablelayout_pull_to_load);
+            showIconImageView();
+            hideResultImageView();
+            hideLoadingImageView();
+            setStatusText(R.string.pullablelayout_pull_to_load);
             if (mOnPullListener != null) {
                 mOnPullListener.onCanceled(this);
             }
         }
         if (fromStatus == Status.LOAD && toStatus == Status.FINISH) {
-            mIconImageView.setVisibility(View.GONE);
-            mIconImageView.clearAnimation();
-            mResultImageView.setVisibility(View.VISIBLE);
-            mLoadingImageView.setVisibility(View.GONE);
-            mLoadingImageView.clearAnimation();
+            hideIconImageView();
+            hideLoadingImageView();
             if (mResult == Result.SUCCEED) {
                 setPreviousUpdateDate();
-                mResultImageView.setImageResource(R.mipmap.pullablelayout_ic_succeed);
-                mStatusTextView.setText(R.string.pullablelayout_load_succeed);
+                setResultImage(R.mipmap.pullablelayout_ic_succeed);
+                setStatusText(R.string.pullablelayout_load_succeed);
             } else {
-                mResultImageView.setImageResource(R.mipmap.pullablelayout_ic_failed);
-                mStatusTextView.setText(R.string.pullablelayout_load_failed);
+                setResultImage(R.mipmap.pullablelayout_ic_failed);
+                setStatusText(R.string.pullablelayout_load_failed);
             }
             new android.os.Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
@@ -294,19 +286,17 @@ public class PullableComponent {
         }
         //This situation happens when the status is finish and you touch the screen and move
         if (fromStatus == Status.FINISH && toStatus == Status.INADEQUATE) {
-            mIconImageView.clearAnimation();
-            mIconImageView.setVisibility(View.VISIBLE);
-            mResultImageView.setVisibility(View.GONE);
-            mLoadingImageView.setVisibility(View.GONE);
-            mStatusTextView.setText(R.string.pullablelayout_pull_to_load);
+            showIconImageView();
+            hideResultImageView();
+            hideLoadingImageView();
+            setStatusText(R.string.pullablelayout_pull_to_load);
         }
         //This situation happens when the status is finish and you touch the screen and move
         if (fromStatus == Status.FINISH && toStatus == Status.ADEQUATE) {
-            mIconImageView.startAnimation(mFlipAnimation);
-            mIconImageView.setVisibility(View.VISIBLE);
-            mResultImageView.setVisibility(View.GONE);
-            mLoadingImageView.setVisibility(View.GONE);
-            mStatusTextView.setText(R.string.pullablelayout_release_to_load);
+            startIconAnimation(mFlipAnimation);
+            hideResultImageView();
+            hideLoadingImageView();
+            setStatusText(R.string.pullablelayout_release_to_load);
         }
     }
 
@@ -318,4 +308,81 @@ public class PullableComponent {
         }
     }
 
+    void showIconImageView() {
+        if (mIconImageView != null && mIconImageView.getVisibility() != View.VISIBLE) {
+            mIconImageView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    void hideIconImageView() {
+        if (mIconImageView != null && mIconImageView.getVisibility() == View.VISIBLE) {
+            mIconImageView.setVisibility(View.GONE);
+            mIconImageView.clearAnimation();
+        }
+    }
+
+    void startIconAnimation(Animation animation) {
+        if (mIconImageView != null) {
+            mIconImageView.startAnimation(animation);
+            showIconImageView();
+        }
+    }
+
+    void showLoadingImageView() {
+        if (mLoadingImageView != null && mLoadingImageView.getVisibility() != View.VISIBLE) {
+            mLoadingImageView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    void hideLoadingImageView() {
+        if (mLoadingImageView != null && mLoadingImageView.getVisibility() == View.VISIBLE) {
+            mLoadingImageView.setVisibility(View.GONE);
+            mLoadingImageView.clearAnimation();
+        }
+    }
+
+    void startLoadingAnimation(Animation animation) {
+        if (mLoadingImageView != null) {
+            mLoadingImageView.startAnimation(animation);
+            showLoadingImageView();
+        }
+    }
+
+    void showResultImageView() {
+        if (mResultImageView != null && mResultImageView.getVisibility() != View.VISIBLE) {
+            mResultImageView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    void hideResultImageView() {
+        if (mResultImageView != null && mResultImageView.getVisibility() == View.VISIBLE) {
+            mResultImageView.setVisibility(View.GONE);
+        }
+    }
+
+    void setResultImage(int resourceId) {
+        if (mResultImageView != null) {
+            mResultImageView.setImageResource(resourceId);
+            showResultImageView();
+        }
+    }
+
+    void showStatusTextView() {
+        if (mStatusTextView != null && mStatusTextView.getVisibility() != View.VISIBLE) {
+            mStatusTextView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    void hideStatusTextView() {
+        if (mStatusTextView != null && mStatusTextView.getVisibility() == View.VISIBLE) {
+            mStatusTextView.setVisibility(View.GONE);
+        }
+    }
+
+    void setStatusText(int stringId) {
+        if (mStatusTextView != null) {
+            mStatusTextView.setText(stringId);
+            showStatusTextView();
+        }
+    }
 }

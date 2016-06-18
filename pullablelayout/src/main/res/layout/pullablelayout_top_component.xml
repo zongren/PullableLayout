@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pullable_container_relativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/pullable_icon_imageView"
@@ -12,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:background="@mipmap/pullablelayout_ic_arrow_down"/>
 
     <ImageView
@@ -22,8 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:background="@mipmap/pullablelayout_ic_loading"
         android:visibility="gone"/>
 
@@ -58,8 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:src="@mipmap/pullablelayout_ic_succeed"
         android:visibility="gone"/>
 

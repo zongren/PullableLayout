@@ -122,10 +122,10 @@ public class PullableLayout extends RelativeLayout {
                     mCurrentComponent.setTouching(true);
                     if (mCurrentComponent.getSize() <= 0) {
                         mCurrentComponent = null;
-                        intercepted = false;
+                        //                        intercepted = false;
                     }
                 } else {
-                    intercepted = false;
+                    //                    intercepted = false;
                 }
                 mTouchDownX = ev.getX();
                 mTouchDownY = ev.getY();
