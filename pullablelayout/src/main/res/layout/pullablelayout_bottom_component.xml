@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pullable_container_relativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <ImageView
-        android:id="@+id/pullable_icon_imageView"
+        android:id="@+id/pullablelayout_icon_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -16,7 +17,7 @@
         android:background="@mipmap/pullablelayout_ic_arrow_up"/>
 
     <ImageView
-        android:id="@+id/pullable_loading_imageView"
+        android:id="@+id/pullablelayout_loading_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -27,7 +28,7 @@
         android:visibility="gone"/>
 
     <TextView
-        android:id="@+id/pullable_status_textView"
+        android:id="@+id/pullablelayout_status_textView"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_alignParentTop="true"
@@ -38,8 +39,8 @@
         android:textColor="#222222"
         android:textSize="16sp"/>
 
-    <TextView
-        android:id="@+id/pullable_previous_update_textView"
+    <!--<TextView
+        android:id="@+id/pullablelayout_previous_update_textView"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_below="@+id/pullable_status_textView"
@@ -49,10 +50,10 @@
         android:text="@string/pullablelayout_previous_update_time"
         android:textColor="#999999"
         android:textSize="12sp"
-        />
+        />-->
 
     <ImageView
-        android:id="@+id/pullable_result_imageView"
+        android:id="@+id/pullablelayout_result_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

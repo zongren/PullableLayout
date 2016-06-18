@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import me.zongren.pullablelayout.Constant.Result;
 import me.zongren.pullablelayout.Constant.Side;
@@ -37,11 +38,6 @@ public class PullableComponent {
     private Status mStatus = Status.INADEQUATE;
     private OnPullListener mOnPullListener;
     private View mView;
-    private ImageView mIconImageView;
-    private ImageView mLoadingImageView;
-    private ImageView mResultImageView;
-    private TextView mStatusTextView;
-    private TextView mPreviousUpdateTextView;
     private Date mPreviousUpdateDate;
     private Side mSide;
     private int mTouchDownSize = 0;
@@ -49,25 +45,63 @@ public class PullableComponent {
     private float mAdequateSize;
     private boolean mTouching;
     private Result mResult;
+    private int mAdequateAnimationId = R.anim.pullablelayout_flip_animation;
+    private int mLoadingAnimationId = R.anim.pullablelayout_rotate_animation;
+    private int mPreviousUpdateFormatStringId = R.string.pullablelayout_previous_update_format;
+    private int mPreviousUpdateDateFormatStringId = R.string.pullablelayout_previous_update_date_format;
+    private int mPullToLoadStringId = R.string.pullablelayout_pull_to_load;
+    private int mReleaseToLoadStringId = R.string.pullablelayout_release_to_load;
+    private int mLoadingStringId = R.string.pullablelayout_loading;
+    private int mLoadSucceedStringId = R.string.pullablelayout_load_succeed;
+    private int mLoadFailedStringId = R.string.pullablelayout_load_failed;
+    private String mPreviousUpdateFormatString;
+    private String mPreviousUpdateDateFormatString;
+    private String mPullToLoadString;
+    private String mReleaseToLoadString;
+    private String mLoadingString;
+    private String mLoadSucceedString;
+    private String mLoadFailedString;
+    private int mIconImageViewId = R.id.pullablelayout_icon_imageView;
+    private int mLoadingImageViewId = R.id.pullablelayout_loading_imageView;
+    private int mResultImageViewId = R.id.pullablelayout_result_imageView;
+    private int mStatusTextViewId = R.id.pullablelayout_status_textView;
+    private int mPreviousUpdateTextViewId = R.id.pullablelayout_previous_update_textView;
+    private ImageView mIconImageView;
+    private ImageView mLoadingImageView;
+    private ImageView mResultImageView;
+    private TextView mStatusTextView;
+    private TextView mPreviousUpdateTextView;
+    private int mIconImageId = R.mipmap.pullablelayout_ic_arrow_down;
+    private int mLoadingImageId = R.mipmap.pullablelayout_ic_loading;
+    private int mSucceedImageId = R.mipmap.pullablelayout_ic_succeed;
+    private int mFailedImageId = R.mipmap.pullablelayout_ic_failed;
 
     public PullableComponent(ViewGroup parent, int layoutId, Side side) {
         mView = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
         mSide = side;
         mAdequateSize = Utils.getPixel(parent.getContext(), 100);
-        mFlipAnimation = (RotateAnimation) AnimationUtils.loadAnimation(parent.getContext(), R.anim.pullablelayout_flip_animation);
-        mRotateAnimation = (RotateAnimation) AnimationUtils.loadAnimation(parent.getContext(), R.anim.pullablelayout_rotate_animation);
-        mReverseFlipAnimation = (RotateAnimation) AnimationUtils.loadAnimation(parent.getContext(), R.anim.pullablelayout_flip_animation);
+
+        mFlipAnimation = (RotateAnimation) AnimationUtils.loadAnimation(parent.getContext(), mAdequateAnimationId);
+        mRotateAnimation = (RotateAnimation) AnimationUtils.loadAnimation(parent.getContext(), mLoadingAnimationId);
+        mReverseFlipAnimation = (RotateAnimation) AnimationUtils.loadAnimation(parent.getContext(), mAdequateAnimationId);
         mFlipAnimation.setInterpolator(new LinearInterpolator());
         mRotateAnimation.setInterpolator(new LinearInterpolator());
         mReverseFlipAnimation.setInterpolator(new ReverseInterpolator());
-        //These view may be null
-        mIconImageView = (ImageView) mView.findViewById(R.id.pullable_icon_imageView);
-        mLoadingImageView = (ImageView) mView.findViewById(R.id.pullable_loading_imageView);
-        mResultImageView = (ImageView) mView.findViewById(R.id.pullable_result_imageView);
-        mStatusTextView = (TextView) mView.findViewById(R.id.pullable_status_textView);
-        mPreviousUpdateTextView = (TextView) mView.findViewById(R.id.pullable_previous_update_textView);
 
-        mPreviousUpdateDate = new Date();
+        mIconImageView = provideIconImageView();
+        mLoadingImageView = provideLoadingImageView();
+        mResultImageView = provideResultImageView();
+        mStatusTextView = provideStatusTextView();
+        mPreviousUpdateTextView = providePreviousUpdateTextView();
+
+        mPreviousUpdateFormatString = parent.getContext().getResources().getString(mPreviousUpdateFormatStringId);
+        mPreviousUpdateDateFormatString = parent.getContext().getResources().getString(mPreviousUpdateDateFormatStringId);
+        mPullToLoadString = parent.getContext().getResources().getString(mPullToLoadStringId);
+        mReleaseToLoadString = parent.getContext().getResources().getString(mReleaseToLoadStringId);
+        mLoadingString = parent.getContext().getResources().getString(mLoadingStringId);
+        mLoadSucceedString = parent.getContext().getResources().getString(mLoadSucceedStringId);
+        mLoadFailedString = parent.getContext().getResources().getString(mLoadFailedStringId);
+
         setPreviousUpdateDate();
     }
 
@@ -155,6 +189,33 @@ public class PullableComponent {
         }
     }
 
+    public void setFailedImageId(int imageId) {
+        mFailedImageId = imageId;
+    }
+
+    public void setIconImageId(int imageId) {
+        mIconImageId = imageId;
+        mIconImageView.setImageResource(imageId);
+    }
+
+    public void setLoadFailedString(String loadFailedString) {
+        mLoadFailedString = loadFailedString;
+    }
+
+    public void setLoadSucceedString(String loadSucceedString) {
+        mLoadSucceedString = loadSucceedString;
+    }
+
+    public void setLoadingImageId(int imageId) {
+        mLoadingImageId = imageId;
+        mLoadingImageView.setImageResource(imageId);
+
+    }
+
+    public void setLoadingString(String loadingString) {
+        mLoadingString = loadingString;
+    }
+
     public void setOnPullListener(OnPullListener onPullListener) {
         mOnPullListener = onPullListener;
     }
@@ -166,10 +227,30 @@ public class PullableComponent {
     public void setPreviousUpdateDate(Date previousUpdateDate) {
         if (mPreviousUpdateTextView != null) {
             mPreviousUpdateDate = previousUpdateDate;
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            String text = String.format(mView.getContext().getResources().getString(R.string.pullablelayout_previous_update_time), dateFormat.format(mPreviousUpdateDate));
+            SimpleDateFormat dateFormat = new SimpleDateFormat(mPreviousUpdateDateFormatString, Locale.getDefault());
+            String text = String.format(mPreviousUpdateFormatString, dateFormat.format(mPreviousUpdateDate));
             mPreviousUpdateTextView.setText(text);
         }
+    }
+
+    public void setPreviousUpdateDateFormatString(String previousUpdateDateFormatString) {
+        mPreviousUpdateDateFormatString = previousUpdateDateFormatString;
+    }
+
+    public void setPreviousUpdateFormat(String previousUpdateFormat) {
+        mPreviousUpdateFormatString = previousUpdateFormat;
+    }
+
+    public void setPullToLoadString(String pullToLoadString) {
+        mPullToLoadString = pullToLoadString;
+    }
+
+    public void setReleaseToLoadString(String releaseToLoadString) {
+        mReleaseToLoadString = releaseToLoadString;
+    }
+
+    public void setSucceedImageId(int imageId) {
+        mSucceedImageId = imageId;
     }
 
     public void setTouching(boolean touching) {
@@ -227,19 +308,19 @@ public class PullableComponent {
             startIconAnimation(mFlipAnimation);
             hideLoadingImageView();
             hideResultImageView();
-            setStatusText(R.string.pullablelayout_release_to_load);
+            setStatusText(mReleaseToLoadString);
         }
         if (fromStatus == Status.ADEQUATE && toStatus == Status.INADEQUATE) {
             startIconAnimation(mReverseFlipAnimation);
             hideLoadingImageView();
             hideResultImageView();
-            setStatusText(R.string.pullablelayout_pull_to_load);
+            setStatusText(mPullToLoadString);
         }
         if (fromStatus == Status.ADEQUATE && toStatus == Status.LOAD) {
             hideIconImageView();
             hideResultImageView();
             startLoadingAnimation(mRotateAnimation);
-            setStatusText(R.string.pullablelayout_loading);
+            setStatusText(mLoadingString);
             if (mOnPullListener != null) {
                 mOnPullListener.onLoading(this);
             }
@@ -248,7 +329,7 @@ public class PullableComponent {
             startIconAnimation(mFlipAnimation);
             hideResultImageView();
             hideLoadingImageView();
-            setStatusText(R.string.pullablelayout_release_to_load);
+            setStatusText(mReleaseToLoadString);
             if (mOnPullListener != null) {
                 mOnPullListener.onCanceled(this);
             }
@@ -257,7 +338,7 @@ public class PullableComponent {
             showIconImageView();
             hideResultImageView();
             hideLoadingImageView();
-            setStatusText(R.string.pullablelayout_pull_to_load);
+            setStatusText(mPullToLoadString);
             if (mOnPullListener != null) {
                 mOnPullListener.onCanceled(this);
             }
@@ -267,11 +348,11 @@ public class PullableComponent {
             hideLoadingImageView();
             if (mResult == Result.SUCCEED) {
                 setPreviousUpdateDate();
-                setResultImage(R.mipmap.pullablelayout_ic_succeed);
-                setStatusText(R.string.pullablelayout_load_succeed);
+                setResultImage(mSucceedImageId);
+                setStatusText(mLoadSucceedString);
             } else {
-                setResultImage(R.mipmap.pullablelayout_ic_failed);
-                setStatusText(R.string.pullablelayout_load_failed);
+                setResultImage(mFailedImageId);
+                setStatusText(mLoadFailedString);
             }
             new android.os.Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
@@ -289,14 +370,14 @@ public class PullableComponent {
             showIconImageView();
             hideResultImageView();
             hideLoadingImageView();
-            setStatusText(R.string.pullablelayout_pull_to_load);
+            setStatusText(mPullToLoadString);
         }
         //This situation happens when the status is finish and you touch the screen and move
         if (fromStatus == Status.FINISH && toStatus == Status.ADEQUATE) {
             startIconAnimation(mFlipAnimation);
             hideResultImageView();
             hideLoadingImageView();
-            setStatusText(R.string.pullablelayout_release_to_load);
+            setStatusText(mReleaseToLoadString);
         }
     }
 
@@ -379,10 +460,55 @@ public class PullableComponent {
         }
     }
 
-    void setStatusText(int stringId) {
+    void setStatusText(String text) {
         if (mStatusTextView != null) {
-            mStatusTextView.setText(stringId);
+            mStatusTextView.setText(text);
             showStatusTextView();
+        }
+    }
+
+    ImageView provideIconImageView() {
+        View view = mView.findViewById(mIconImageViewId);
+        if (view instanceof ImageView) {
+            return (ImageView) view;
+        } else {
+            return null;
+        }
+    }
+
+    ImageView provideLoadingImageView() {
+        View view = mView.findViewById(mLoadingImageViewId);
+        if (view instanceof ImageView) {
+            return (ImageView) view;
+        } else {
+            return null;
+        }
+    }
+
+    ImageView provideResultImageView() {
+        View view = mView.findViewById(mResultImageViewId);
+        if (view instanceof ImageView) {
+            return (ImageView) view;
+        } else {
+            return null;
+        }
+    }
+
+    TextView provideStatusTextView() {
+        View view = mView.findViewById(mStatusTextViewId);
+        if (view instanceof TextView) {
+            return (TextView) view;
+        } else {
+            return null;
+        }
+    }
+
+    TextView providePreviousUpdateTextView() {
+        View view = mView.findViewById(mPreviousUpdateTextViewId);
+        if (view instanceof TextView) {
+            return (TextView) view;
+        } else {
+            return null;
         }
     }
 }

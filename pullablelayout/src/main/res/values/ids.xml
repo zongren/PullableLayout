@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="pullablelayout_icon_imageView" type="id"/>
+    <item name="pullablelayout_loading_imageView" type="id"/>
+    <item name="pullablelayout_resultImageView" type="id"/>
+    <item name="pullablelayout_status_textView" type="id"/>
+    <item name="pullablelayout_previous_update_textView" type="id"/>
+
+</resources>

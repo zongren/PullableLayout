@@ -175,20 +175,20 @@ public class PullableLayout extends RelativeLayout {
         int width = r - l;
         int height = b - t;
 
-        int pullableViewLeft = 0;
-        int pullableViewTop = 0;
+        int pullableViewLeft = getPaddingLeft();
+        int pullableViewTop = getPaddingLeft();
         int pullableViewWidth = mPullableView.getMeasuredWidth();
         int pullableViewHeight = mPullableView.getMeasuredHeight();
 
         if (mCurrentComponent != null) {
-            int pullableComponentLeft = 0;
-            int pullableComponentTop = 0;
+            int pullableComponentLeft = getPaddingLeft();
+            int pullableComponentTop = getPaddingTop();
             int pullableComponentWidth = mCurrentComponent.getView().getMeasuredWidth();
             int pullableComponentHeight = mCurrentComponent.getView().getMeasuredHeight();
             int pullableComponentSize = mCurrentComponent.getSize();
             switch (mCurrentComponent.getSide()) {
                 case TOP:
-                    pullableComponentTop = pullableComponentSize - pullableComponentHeight;
+                    pullableComponentTop += pullableComponentSize - pullableComponentHeight;
                     pullableViewTop += pullableComponentSize;
                     //layout other components on other sides
                     if (leftComponent != null) {
@@ -202,7 +202,7 @@ public class PullableLayout extends RelativeLayout {
                     }
                     break;
                 case LEFT:
-                    pullableComponentLeft = pullableComponentSize - pullableComponentWidth;
+                    pullableComponentLeft += pullableComponentSize - pullableComponentWidth;
                     pullableViewLeft += pullableComponentSize;
                     //layout other components on other sides
                     if (topComponent != null) {
@@ -216,7 +216,7 @@ public class PullableLayout extends RelativeLayout {
                     }
                     break;
                 case BOTTOM:
-                    pullableComponentTop = height - pullableComponentSize;
+                    pullableComponentTop += height - pullableComponentSize;
                     pullableViewTop -= pullableComponentSize;
                     //layout other components on other sides
                     if (topComponent != null) {
@@ -230,7 +230,7 @@ public class PullableLayout extends RelativeLayout {
                     }
                     break;
                 case RIGHT:
-                    pullableComponentLeft = width - pullableComponentSize;
+                    pullableComponentLeft += width - pullableComponentSize;
                     pullableViewLeft -= pullableComponentSize;
                     //layout other components on other sides
                     if (topComponent != null) {
@@ -402,6 +402,5 @@ public class PullableLayout extends RelativeLayout {
         }
         return intercept;
     }
-
 
 }
