@@ -1,12 +1,12 @@
 package me.zongren.pullablelayout.Main;
 
 import android.os.Looper;
-import android.support.v4.view.animation.PathInterpolatorCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -176,7 +176,7 @@ public class PullableComponent {
     }
 
     private Animation animateToPosition(final float position) {
-        Interpolator easeInOutQuart = PathInterpolatorCompat.create(0.77f, 0f, 0.175f, 1f);
+        Interpolator easeInOutQuart = new DecelerateInterpolator();
 
         Animation animation = new Animation() {
             @Override
