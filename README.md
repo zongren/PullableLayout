@@ -1,4 +1,4 @@
-## PullableLayout [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/zongren/PullableLayout/blob/master/LICENSE.md) [![GitHub release](https://img.shields.io/github/release/zongren/PullableLayout.svg)](https://github.com/zongren/PullableLayout/releases) [![Build Status](https://travis-ci.org/zongren/PullableLayout.png?branch=master)](https://travis-ci.org/zongren/PullableLayout)
+## PullableLayout [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/zongren/PullableLayout/blob/master/LICENSE.md) [![GitHub release](https://img.shields.io/github/release/zongren/PullableLayout.svg)](https://github.com/zongren/PullableLayout/releases) [![Build Status](https://travis-ci.org/zongren/PullableLayout.svg?branch=master)](https://travis-ci.org/zongren/PullableLayout)
 
 PullableLayout makes it easy to add pull-to-load feature to your app on top,left,bottom and right side.
 
