@@ -5,7 +5,7 @@ PullableLayout makes it easy to add pull-to-load feature to your app on top,left
 ## Screen capture
 ![](https://github.com/zongren/PullableLayout/blob/master/screen.gif)
 
-## Support all views.
+## Support all views
 
 ## How to use
 * Use JitPack [![](https://jitpack.io/v/zongren/PullableLayout.svg)](https://jitpack.io/#zongren/PullableLayout)
