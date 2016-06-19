@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<me.zongren.pullablelayout.Main.PullableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:PullableLayout="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_pullableLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    PullableLayout:pullablelayout_side="TOP|BOTTOM"
+    tools:context=".PullableExpandableListViewActivity"
+    >
+
+    <me.zongren.pullablelayout.View.PullableExpandableListView
+        android:id="@+id/activity_pullable_expandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_text_view"
+        />
+</me.zongren.pullablelayout.Main.PullableLayout>

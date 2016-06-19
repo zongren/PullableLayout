@@ -108,13 +108,6 @@ public class PullableLayout extends RelativeLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        //If we decide to intercept the event,there is no need to ask super.
-        return onInterceptTouchEvent(ev) || super.dispatchTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        boolean intercepted = true;
         switch (ev.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 if (mCurrentComponent != null) {
@@ -122,27 +115,23 @@ public class PullableLayout extends RelativeLayout {
                     mCurrentComponent.setTouching(true);
                     if (mCurrentComponent.getSize() <= 0) {
                         mCurrentComponent = null;
-                        //                        intercepted = false;
                     }
-                } else {
-                    //                    intercepted = false;
                 }
                 mTouchDownX = ev.getX();
                 mTouchDownY = ev.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                intercepted = handleTouchMove(ev);
+                handleTouchMove(ev);
                 break;
             case MotionEvent.ACTION_UP:
                 if (mCurrentComponent != null) {
                     mCurrentComponent.release();
                     mCurrentComponent.setTouching(false);
-                } else {
-                    intercepted = false;
                 }
                 break;
         }
-        return intercepted;
+        super.dispatchTouchEvent(ev);
+        return true;
     }
 
     @Override
@@ -383,6 +372,12 @@ public class PullableLayout extends RelativeLayout {
             }
             if (intercept) {
                 if (mCurrentComponent != null) {
+                    mTouchDownX = ev.getX();
+                    mTouchDownY = ev.getY();
+                    offsetX = currentX - mTouchDownX;
+                    offsetY = currentY - mTouchDownY;
+                    absOffsetX = Math.abs(offsetX);
+                    absOffsetY = Math.abs(offsetY);
                     switch (mCurrentComponent.getSide()) {
                         case TOP:
                             mCurrentComponent.setSize((int) (absOffsetY / mDistanceRatio));

@@ -3,8 +3,8 @@ package me.zongren.pullablelayout.Inteface;
 import me.zongren.pullablelayout.Main.PullableComponent;
 
 /**
- * Created by zongren on 16/6/12.
- * All Rights Reserved By 秦皇岛商之翼网络科技有限公司.
+ * Created by 宗仁 on 16/6/12.
+ * All Rights Reserved By 宗仁.
  */
 public interface OnPullListener {
     void onCanceled(PullableComponent pullableComponent);

@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = "me.zongren"
-version = "1.5.3"
+version = "1.6.0"
 
 android {
     compileSdkVersion 21

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<me.zongren.pullablelayout.Main.PullableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:PullableLayout="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_pullableLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    PullableLayout:pullablelayout_side="TOP"
+    tools:context=".PullableScrollViewActivity"
+    >
+
+    <me.zongren.pullablelayout.View.PullableScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/activity_pullable_textView"
+                android:layout_width="match_parent"
+                android:layout_height="800dp"
+                android:gravity="center"
+                android:textSize="24sp"
+                />
+        </LinearLayout>
+
+    </me.zongren.pullablelayout.View.PullableScrollView>
+
+</me.zongren.pullablelayout.Main.PullableLayout>
