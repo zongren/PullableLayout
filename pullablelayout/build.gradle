@@ -3,17 +3,17 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = "me.zongren"
-version = "1.6.0"
+version = "1.6.1"
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    compileSdkVersion 24
+    buildToolsVersion "24"
     resourcePrefix "pullablelayout_"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 21
-        versionCode 3
+        targetSdkVersion 24
+        versionCode 4
         versionName version
     }
     android {
@@ -33,8 +33,85 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
 
 }
 
+def siteUrl = 'https://github.com/zongren/PullableLayout'
+def gitUrl = 'https://github.com/zongren/PullableLayout.git'
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "PullableLayout"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["MIT"]
+        publish = true
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+
+                // Add your description here
+                name 'PullableLayout makes it easy to add pull-to-load feature to your app.'
+                url siteUrl
+
+                // Set your license
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'https://github.com/zongren/PullableLayout/blob/master/LICENSE.md'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'zongren'
+                        name 'zongren'
+                        email 'zongren@live.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+
+                }
+            }
+        }
+    }
+}
+
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}

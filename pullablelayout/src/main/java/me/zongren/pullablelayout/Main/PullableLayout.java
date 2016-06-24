@@ -119,19 +119,23 @@ public class PullableLayout extends RelativeLayout {
                 }
                 mTouchDownX = ev.getX();
                 mTouchDownY = ev.getY();
-                break;
+                super.dispatchTouchEvent(ev);
+                return true;
             case MotionEvent.ACTION_MOVE:
-                handleTouchMove(ev);
+                if (handleTouchMove(ev)) {
+                    return true;
+                }
                 break;
             case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
                 if (mCurrentComponent != null) {
                     mCurrentComponent.release();
                     mCurrentComponent.setTouching(false);
+                    return true;
                 }
                 break;
         }
-        super.dispatchTouchEvent(ev);
-        return true;
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
