@@ -5,7 +5,7 @@
 `PullableLayout`帮助快速添加拉动并且刷新的特性，并且支持上下左右四个方向。
 
 ## 屏幕截图
-![](https://github.com/zongren/PullableLayout/blob/master/screen.gif)
+![](https://github.com/zongren/PullableLayout/blob/master/screenshot.gif)
 
 ## 支持所有视图
 

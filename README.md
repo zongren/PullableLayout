@@ -5,7 +5,7 @@
 PullableLayout makes it easy to add pull-to-load feature to your app on top,left,bottom and right side.
 
 ## Screen capture
-![](https://github.com/zongren/PullableLayout/blob/master/screen.gif)
+![](https://github.com/zongren/PullableLayout/blob/master/screenshot.gif)
 
 ## Support all views
 
