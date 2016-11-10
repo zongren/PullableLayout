@@ -25,8 +25,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile APP_COMPAT
-    compile RECYCLER_VIEW
+    compile APP_COMPAT as String
+    compile RECYCLER_VIEW as String
     testCompile 'junit:junit:4.12'
     compile project(':pullablelayout')
 }

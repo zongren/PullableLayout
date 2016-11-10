@@ -26,85 +26,36 @@ android {
     }
 }
 
-apply plugin: 'com.jfrog.bintray'
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile APP_COMPAT
-    compile RECYCLER_VIEW
+    compile APP_COMPAT as String
+    compile RECYCLER_VIEW as String
 }
 
-def siteUrl = 'https://github.com/zongren/PullableLayout'
-def gitUrl = 'https://github.com/zongren/PullableLayout.git'
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'PullableLayout'
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    publishedGroupId = 'me.zongren'
+    libraryName = 'PullableLayout'
+    artifact = 'pullablelayout'
 
-bintray {
-    user = properties.getProperty("BINTRAY_USER")
-    key = properties.getProperty("BINTRAY_API_KEY")
+    libraryDescription = 'PullableLayout makes it easy to add the pull-to-load feature to your app.'
 
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "PullableLayout"
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["MIT"]
-        publish = true
-    }
+    siteUrl = 'https://github.com/zongren/PullableLayout'
+    gitUrl = 'https://github.com/zongren/PullableLayout.git'
+
+    libraryVersion = VERSION_NAME
+
+    developerId = 'zongren'
+    developerName = '宗仁'
+    developerEmail = 'zongren@live.com'
+
+    licenseName = 'The MIT License (MIT)'
+    licenseUrl = 'https://github.com/zongren/PullableLayout/blob/master/LICENSE.md'
+    allLicenses = ["MIT"]
 }
 
-apply plugin: 'com.github.dcendents.android-maven'
+//apply from: 'https://raw.githubusercontent.com/zongren/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/zongren/JCenter/master/bintrayv1.gradle'
 
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
-
-                name 'PullableLayout makes it easy to add the pull-to-load feature to your app.'
-                url siteUrl
-
-                licenses {
-                    license {
-                        name 'The MIT License (MIT)'
-                        url 'https://github.com/zongren/PullableLayout/blob/master/LICENSE.md'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'zongren'
-                        name 'zongren'
-                        email 'zongren@live.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
-
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
