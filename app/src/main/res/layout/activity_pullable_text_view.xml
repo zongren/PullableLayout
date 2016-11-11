@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<me.zongren.pullablelayout.Main.PullableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_pullable_text_view_pullableLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:side="TOP|LEFT|BOTTOM|RIGHT"
+    >
+
+    <me.zongren.pullablelayout.View.PullableTextView
+        android:id="@+id/activity_pullable_text_view_textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="#666"
+        android:textSize="18sp"
+        />
+
+</me.zongren.pullablelayout.Main.PullableLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ResourceName"
+    >
+    <declare-styleable
+        name="pullablelayout">
+        <attr name="side">
+            <flag name="TOP" value="1"/>
+            <flag name="LEFT" value="2"/>
+            <flag name="BOTTOM" value="4"/>
+            <flag name="RIGHT" value="8"/>
+        </attr>
+        <attr name="distanceRatio" format="float"/>
+        <attr name="verticalAngle" format="float"/>
+        <attr name="horizontalAngle" format="float"/>
+        <attr name="overlay" format="boolean"/>
+    </declare-styleable>
+</resources>

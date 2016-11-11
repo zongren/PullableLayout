@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pullablelayout_pull_to_load">Pull to load</string>
+    <string name="pullablelayout_release_to_load">Release to load</string>
+    <string name="pullablelayout_loading">Loading…</string>
+    <string name="pullablelayout_load_succeed">Loading succeed</string>
+    <string name="pullablelayout_load_failed">Loading failed</string>
+</resources>
